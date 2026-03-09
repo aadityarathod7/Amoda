@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import { Leaf, Hand, Gem, Timer } from 'lucide-react';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -8,10 +9,10 @@ const fadeUp = {
 };
 
 const whyItems = [
-  { icon: '🌿', title: 'Eco-Friendly', desc: 'Made with 100% natural soy wax — clean-burning and sustainable.' },
-  { icon: '✋', title: 'Handmade', desc: 'Every candle is hand-poured in small batches with love and attention.' },
-  { icon: '💎', title: 'Premium Wax', desc: 'We use only food-grade soy wax for the purest, cleanest burn.' },
-  { icon: '⏱️', title: 'Long Burn Time', desc: '45-55 hours of fragrance — more moments, more value.' },
+  { icon: Leaf, title: 'Eco-Friendly', desc: 'Made with 100% natural soy wax — clean-burning and sustainable.' },
+  { icon: Hand, title: 'Handmade', desc: 'Every candle is hand-poured in small batches with love and attention.' },
+  { icon: Gem, title: 'Premium Wax', desc: 'We use only food-grade soy wax for the purest, cleanest burn.' },
+  { icon: Timer, title: 'Long Burn Time', desc: '45-55 hours of fragrance — more moments, more value.' },
 ];
 
 export default function About() {
@@ -76,7 +77,7 @@ export default function About() {
                   viewport={{ once: true }}
                   custom={i}
                 >
-                  <div className="text-4xl mb-4">{item.icon}</div>
+                  <div className="flex justify-center mb-4 text-primary"><item.icon size={36} /></div>
                   <h3 className="font-serif text-lg text-text-dark mb-2">{item.title}</h3>
                   <p className="font-sans text-sm text-secondary leading-relaxed">{item.desc}</p>
                 </motion.div>

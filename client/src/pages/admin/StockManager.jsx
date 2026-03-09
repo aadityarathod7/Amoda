@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { toast } from 'react-toastify';
 import { fetchAllProducts, updateStock } from '../../utils/api';
 import AdminSidebar from '../../components/AdminSidebar';
+import { TriangleAlert } from 'lucide-react';
 
 const stockColor = (qty) => {
   if (qty === 0) return 'bg-red-100 text-red-700 border-red-200';
@@ -57,8 +58,8 @@ export default function StockManager() {
           {/* Low stock alerts */}
           {lowStock.length > 0 && (
             <div className="bg-yellow-50 border border-yellow-200 rounded-candle p-4 mb-6">
-              <p className="font-sans text-sm font-medium text-yellow-800 mb-2">
-                ⚠️ Low Stock Alert ({lowStock.length} products)
+              <p className="font-sans text-sm font-medium text-yellow-800 mb-2 flex items-center gap-1.5">
+                <TriangleAlert size={15} /> Low Stock Alert ({lowStock.length} products)
               </p>
               <div className="flex flex-wrap gap-2">
                 {lowStock.map((p) => (

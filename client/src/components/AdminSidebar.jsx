@@ -1,13 +1,14 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
+import { LayoutDashboard, Flame, Package, MessageSquare, Settings, LogOut } from 'lucide-react';
 
 const links = [
-  { to: '/admin', label: 'Dashboard', icon: '📊', end: true },
-  { to: '/admin/products', label: 'Products', icon: '🕯️' },
-  { to: '/admin/stock', label: 'Stock', icon: '📦' },
-  { to: '/admin/inquiries', label: 'Inquiries', icon: '💬' },
-  { to: '/admin/settings', label: 'Settings', icon: '⚙️' },
+  { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
+  { to: '/admin/products', label: 'Products', icon: Flame },
+  { to: '/admin/stock', label: 'Stock', icon: Package },
+  { to: '/admin/inquiries', label: 'Inquiries', icon: MessageSquare },
+  { to: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
 export default function AdminSidebar() {
@@ -28,7 +29,7 @@ export default function AdminSidebar() {
       </div>
 
       <nav className="flex-1 space-y-1">
-        {links.map(({ to, label, icon, end }) => (
+        {links.map(({ to, label, icon: Icon, end }) => (
           <NavLink
             key={to}
             to={to}
@@ -41,7 +42,7 @@ export default function AdminSidebar() {
               }`
             }
           >
-            <span>{icon}</span>
+            <Icon size={16} />
             {label}
           </NavLink>
         ))}
@@ -51,7 +52,7 @@ export default function AdminSidebar() {
         onClick={handleLogout}
         className="flex items-center gap-3 px-3 py-2.5 rounded-lg font-sans text-sm text-accent/50 hover:text-white hover:bg-white/10 transition-all mt-4"
       >
-        <span>🚪</span> Logout
+        <LogOut size={16} /> Logout
       </button>
     </aside>
   );

@@ -4,10 +4,11 @@ import { Helmet } from 'react-helmet';
 import { fetchDashboard } from '../../utils/api';
 import AdminSidebar from '../../components/AdminSidebar';
 import { DashboardStatSkeleton } from '../../components/Skeletons';
+import { Flame, CheckCircle, AlertCircle, MessageSquare, Package } from 'lucide-react';
 
-const StatCard = ({ label, value, icon, color }) => (
+const StatCard = ({ label, value, icon: Icon, color }) => (
   <div className={`rounded-candle p-5 ${color} flex items-center gap-4`}>
-    <div className="text-3xl">{icon}</div>
+    <div><Icon size={32} /></div>
     <div>
       <p className="font-sans text-sm opacity-70">{label}</p>
       <p className="font-serif text-3xl font-bold">{value ?? '—'}</p>
@@ -43,10 +44,10 @@ export default function Dashboard() {
               Array.from({ length: 4 }).map((_, i) => <DashboardStatSkeleton key={i} />)
             ) : (
               <>
-                <StatCard label="Total Products" value={data?.totalProducts} icon="🕯️" color="bg-primary/10 text-secondary" />
-                <StatCard label="In Stock" value={data?.inStockCount} icon="✅" color="bg-green-50 text-green-800" />
-                <StatCard label="Out of Stock" value={data?.outOfStockCount} icon="⚠️" color="bg-red-50 text-red-800" />
-                <StatCard label="Inquiries" value={data?.totalInquiries} icon="💬" color="bg-blue-50 text-blue-800" />
+                <StatCard label="Total Products" value={data?.totalProducts} icon={Flame} color="bg-primary/10 text-secondary" />
+                <StatCard label="In Stock" value={data?.inStockCount} icon={CheckCircle} color="bg-green-50 text-green-800" />
+                <StatCard label="Out of Stock" value={data?.outOfStockCount} icon={AlertCircle} color="bg-red-50 text-red-800" />
+                <StatCard label="Inquiries" value={data?.totalInquiries} icon={MessageSquare} color="bg-blue-50 text-blue-800" />
               </>
             )}
           </div>
@@ -54,16 +55,16 @@ export default function Dashboard() {
           {/* Quick links */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
             {[
-              { to: '/admin/products', label: 'Manage Products', desc: 'Add, edit, or remove candles', icon: '🕯️' },
-              { to: '/admin/stock', label: 'Update Stock', desc: 'Quick inventory management', icon: '📦' },
-              { to: '/admin/inquiries', label: 'View Inquiries', desc: 'Customer messages', icon: '💬' },
-            ].map(({ to, label, desc, icon }) => (
+              { to: '/admin/products', label: 'Manage Products', desc: 'Add, edit, or remove candles', icon: Flame },
+              { to: '/admin/stock', label: 'Update Stock', desc: 'Quick inventory management', icon: Package },
+              { to: '/admin/inquiries', label: 'View Inquiries', desc: 'Customer messages', icon: MessageSquare },
+            ].map(({ to, label, desc, icon: Icon }) => (
               <Link
                 key={to}
                 to={to}
                 className="bg-white rounded-candle shadow-card p-5 hover:shadow-warm transition-shadow group"
               >
-                <div className="text-2xl mb-2">{icon}</div>
+                <div className="mb-2"><Icon size={24} /></div>
                 <p className="font-sans font-medium text-text-dark group-hover:text-primary transition-colors">{label}</p>
                 <p className="font-sans text-xs text-secondary mt-1">{desc}</p>
               </Link>
