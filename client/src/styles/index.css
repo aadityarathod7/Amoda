@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-text-dark font-sans antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-candle font-sans font-medium
+           hover:bg-secondary transition-all duration-300 shadow-warm
+           hover:shadow-lg active:scale-95 min-h-[44px];
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary px-6 py-3 rounded-candle font-sans font-medium
+           hover:bg-primary hover:text-white transition-all duration-300 min-h-[44px];
+  }
+
+  .card {
+    @apply bg-white rounded-candle shadow-card overflow-hidden;
+  }
+
+  .skeleton {
+    @apply animate-pulse bg-accent rounded;
+  }
+
+  .section-heading {
+    @apply font-serif text-3xl md:text-4xl text-text-dark mb-2;
+  }
+
+  .section-subheading {
+    @apply font-sans text-secondary text-sm tracking-widest uppercase mb-6;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #FDF8F3; }
+::-webkit-scrollbar-thumb { background: #D4A574; border-radius: 3px; }
+
+/* Smooth scroll */
+html { scroll-behavior: smooth; }
