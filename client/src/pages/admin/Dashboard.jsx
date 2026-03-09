@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { fetchDashboard } from '../../utils/api';
 import AdminSidebar from '../../components/AdminSidebar';
 import { DashboardStatSkeleton } from '../../components/Skeletons';
-import { Flame, CheckCircle, AlertCircle, MessageSquare, Package } from 'lucide-react';
+import { Flame, CheckCircle, AlertCircle, MessageSquare, Package, Eye, TrendingUp } from 'lucide-react';
 
 const StatCard = ({ label, value, icon: Icon, color }) => (
   <div className={`rounded-candle p-5 ${color} flex items-center gap-4`}>
@@ -69,6 +69,53 @@ export default function Dashboard() {
                 <p className="font-sans text-xs text-secondary mt-1">{desc}</p>
               </Link>
             ))}
+          </div>
+
+          {/* Analytics — Most Viewed & Most Ordered */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+            {/* Most Viewed */}
+            <div className="bg-white rounded-candle shadow-card p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <Eye size={18} className="text-blue-500" />
+                <h2 className="font-serif text-lg text-text-dark">Most Viewed</h2>
+              </div>
+              {data?.mostViewed?.length > 0 ? (
+                <ul className="space-y-3">
+                  {data.mostViewed.map((p, i) => (
+                    <li key={p._id} className="flex items-center gap-3">
+                      <span className="font-sans text-xs text-secondary/50 w-4">{i + 1}</span>
+                      <img src={p.images[0]} alt={p.name} className="w-9 h-9 rounded-lg object-cover flex-shrink-0" />
+                      <span className="font-sans text-sm text-text-dark flex-1 truncate">{p.name}</span>
+                      <span className="font-sans text-xs text-blue-600 font-semibold">{p.views} views</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="font-sans text-sm text-secondary/50">No data yet</p>
+              )}
+            </div>
+
+            {/* Most Ordered */}
+            <div className="bg-white rounded-candle shadow-card p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <TrendingUp size={18} className="text-primary" />
+                <h2 className="font-serif text-lg text-text-dark">Most Selling</h2>
+              </div>
+              {data?.mostOrdered?.length > 0 ? (
+                <ul className="space-y-3">
+                  {data.mostOrdered.map((p, i) => (
+                    <li key={p._id} className="flex items-center gap-3">
+                      <span className="font-sans text-xs text-secondary/50 w-4">{i + 1}</span>
+                      <img src={p.images[0]} alt={p.name} className="w-9 h-9 rounded-lg object-cover flex-shrink-0" />
+                      <span className="font-sans text-sm text-text-dark flex-1 truncate">{p.name}</span>
+                      <span className="font-sans text-xs text-primary font-semibold">{p.orderCount} orders</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="font-sans text-sm text-secondary/50">No orders recorded yet</p>
+              )}
+            </div>
           </div>
 
           {/* Recent inquiries */}

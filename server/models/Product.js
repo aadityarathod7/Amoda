@@ -54,6 +54,14 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    views: {
+      type: Number,
+      default: 0,
+    },
+    orderCount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

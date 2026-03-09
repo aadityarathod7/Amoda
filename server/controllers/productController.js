@@ -40,7 +40,11 @@ export const getFeaturedProducts = async (req, res) => {
 
 // GET /api/products/:id
 export const getProductById = async (req, res) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findByIdAndUpdate(
+    req.params.id,
+    { $inc: { views: 1 } },
+    { new: true }
+  );
   if (!product || !product.isActive)
     return res.status(404).json({ message: 'Product not found' });
   res.json(product);

@@ -36,14 +36,23 @@ export const logout = (req, res) => {
 
 // GET /api/admin/dashboard
 export const getDashboard = async (req, res) => {
-  const [totalProducts, totalInquiries, inStockCount, outOfStockCount, recentInquiries] =
-    await Promise.all([
-      Product.countDocuments({ isActive: true }),
-      ContactInquiry.countDocuments(),
-      Product.countDocuments({ stockQuantity: { $gt: 0 }, isActive: true }),
-      Product.countDocuments({ stockQuantity: 0, isActive: true }),
-      ContactInquiry.find().sort({ createdAt: -1 }).limit(5),
-    ]);
+  const [
+    totalProducts,
+    totalInquiries,
+    inStockCount,
+    outOfStockCount,
+    recentInquiries,
+    mostViewed,
+    mostOrdered,
+  ] = await Promise.all([
+    Product.countDocuments({ isActive: true }),
+    ContactInquiry.countDocuments(),
+    Product.countDocuments({ stockQuantity: { $gt: 0 }, isActive: true }),
+    Product.countDocuments({ stockQuantity: 0, isActive: true }),
+    ContactInquiry.find().sort({ createdAt: -1 }).limit(5),
+    Product.find({ isActive: true }).sort({ views: -1 }).limit(5).select('name images views'),
+    Product.find({ isActive: true }).sort({ orderCount: -1 }).limit(5).select('name images orderCount'),
+  ]);
 
-  res.json({ totalProducts, totalInquiries, inStockCount, outOfStockCount, recentInquiries });
+  res.json({ totalProducts, totalInquiries, inStockCount, outOfStockCount, recentInquiries, mostViewed, mostOrdered });
 };
