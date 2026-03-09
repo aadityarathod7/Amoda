@@ -134,7 +134,7 @@ export default function ProductCard({ product }) {
               </span>
             )}
             {!isOutOfStock && !isBestseller && isNewProduct && (
-              <span className="bg-green-500 text-white text-xs font-sans px-2 py-1 rounded-full">New</span>
+              <span className="bg-primary text-white text-xs font-sans px-2 py-1 rounded-full">New</span>
             )}
             {!isOutOfStock && !isBestseller && !isNewProduct && product.isFeatured && (
               <span className="bg-primary text-white text-xs font-sans px-2 py-1 rounded-full">Featured</span>
