@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useSettings } from '../context/SettingsContext';
+
+const INSTAGRAM = 'amoda_candle';
+const WHATSAPP = '919009303952';
 
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -15,8 +17,6 @@ const WhatsAppIcon = () => (
 
 
 export default function Footer() {
-  const { whatsappNumber, instagramUsername } = useSettings();
-
   return (
     <footer className="bg-[#1e1e1e] text-accent">
       {/* Top decorative band */}
@@ -39,30 +39,26 @@ export default function Footer() {
               stillness, and the small luxuries that make a house feel like home.
             </p>
             <div className="flex gap-3">
-              {instagramUsername && (
-                <a
-                  href={`https://instagram.com/${instagramUsername}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Instagram"
-                  className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-sans text-accent/70 hover:border-primary hover:text-primary transition-all"
-                >
-                  <InstagramIcon />
-                  <span>@{instagramUsername}</span>
-                </a>
-              )}
-              {whatsappNumber && (
-                <a
-                  href={`https://wa.me/${whatsappNumber}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="WhatsApp"
-                  className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-sans text-accent/70 hover:border-green-500 hover:text-green-400 transition-all"
-                >
-                  <WhatsAppIcon />
-                  <span>Chat with us</span>
-                </a>
-              )}
+              <a
+                href={`https://instagram.com/${INSTAGRAM}`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-sans text-accent/70 hover:border-primary hover:text-primary transition-all"
+              >
+                <InstagramIcon />
+                <span>@{INSTAGRAM}</span>
+              </a>
+              <a
+                href={`https://wa.me/${WHATSAPP}`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="WhatsApp"
+                className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-sans text-accent/70 hover:border-green-500 hover:text-green-400 transition-all"
+              >
+                <WhatsAppIcon />
+                <span>Chat with us</span>
+              </a>
             </div>
           </div>
 
@@ -97,30 +93,26 @@ export default function Footer() {
               Connect
             </h3>
             <ul className="space-y-3 font-sans text-sm text-accent/60">
-              {whatsappNumber && (
-                <li>
-                  <a
-                    href={`https://wa.me/${whatsappNumber}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-white transition-colors"
-                  >
-                    WhatsApp
-                  </a>
-                </li>
-              )}
-              {instagramUsername && (
-                <li>
-                  <a
-                    href={`https://instagram.com/${instagramUsername}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-white transition-colors"
-                  >
-                    Instagram
-                  </a>
-                </li>
-              )}
+              <li>
+                <a
+                  href={`https://wa.me/${WHATSAPP}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  WhatsApp
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://instagram.com/${INSTAGRAM}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Instagram
+                </a>
+              </li>
               <li>
                 <Link to="/contact" className="hover:text-white transition-colors">
                   Send a Message

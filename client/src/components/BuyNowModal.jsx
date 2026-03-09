@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'react-toastify';
-import { useSettings } from '../context/SettingsContext';
+
+const WHATSAPP = '919009303952';
+const INSTAGRAM = 'amoda_candle';
 
 const WhatsAppIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
@@ -15,8 +17,6 @@ const InstagramIcon = () => (
 );
 
 export default function BuyNowModal({ product, isOpen, onClose }) {
-  const { whatsappNumber, instagramUsername } = useSettings();
-
   const handleWhatsApp = () => {
     const message = encodeURIComponent(
       `Hi! I'd like to order:\n\n` +
@@ -25,12 +25,12 @@ export default function BuyNowModal({ product, isOpen, onClose }) {
         `🔗 Product: ${window.location.href}\n\n` +
         `Please confirm availability and shipping details!`
     );
-    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+    window.open(`https://wa.me/${WHATSAPP}?text=${message}`, '_blank');
     onClose();
   };
 
   const handleInstagram = () => {
-    window.open(`https://ig.me/m/${instagramUsername}`, '_blank');
+    window.open(`https://ig.me/m/${INSTAGRAM}`, '_blank');
     toast.info(`Send us a DM with "${product.name}" to place your order!`, {
       autoClose: 5000,
     });
