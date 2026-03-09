@@ -7,6 +7,7 @@ import {
   updateProduct,
   deleteProduct,
   updateStock,
+  incrementOrderCount,
   getAllProducts,
   uploadImages,
 } from '../controllers/productController.js';
@@ -26,6 +27,7 @@ router.post('/admin', protect, createProduct);
 router.put('/admin/:id', protect, updateProduct);
 router.delete('/admin/:id', protect, deleteProduct);
 router.patch('/admin/:id/stock', protect, updateStock);
+router.patch('/admin/:id/order', protect, incrementOrderCount);
 router.post('/admin/upload', protect, upload.array('images', 5), uploadImages);
 
 export default router;

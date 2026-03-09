@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { fetchFeaturedProducts } from '../utils/api';
-import { useSettings } from '../context/SettingsContext';
+
+const INSTAGRAM = 'amoda_candle';
 import ProductCard from '../components/ProductCard';
 import { ProductCardSkeleton } from '../components/Skeletons';
 
@@ -23,7 +24,7 @@ const testimonials = [
 ];
 
 export default function Home() {
-  const { heroTagline, instagramUsername } = useSettings();
+  const heroTagline = 'Scented with soul, made with care.';
   const [featured, setFeatured] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -179,7 +180,7 @@ export default function Home() {
             custom={1}
           >
             <img
-              src="https://images.unsplash.com/photo-1603905042124-33d06c2e0c10?w=800&q=80"
+              src="/src/public/candles/Gemini_Generated_Image_yz866wyz866wyz86.png"
               alt="Candle making process"
               loading="lazy"
               className="w-full h-full object-cover"
@@ -226,30 +227,28 @@ export default function Home() {
       </section>
 
       {/* Instagram CTA */}
-      {instagramUsername && (
-        <section className="bg-text-dark py-16 px-4 text-center">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+      <section className="bg-text-dark py-16 px-4 text-center">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <p className="section-subheading text-primary/70">Social</p>
+          <h2 className="font-serif text-3xl text-white mb-4">Follow our journey</h2>
+          <p className="font-sans text-accent/60 mb-8">
+            Behind the scenes, new launches, and candle inspiration daily.
+          </p>
+          <a
+            href={`https://instagram.com/${INSTAGRAM}`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white font-sans font-medium px-8 py-3 rounded-candle hover:opacity-90 transition-opacity"
           >
-            <p className="section-subheading text-primary/70">Social</p>
-            <h2 className="font-serif text-3xl text-white mb-4">Follow our journey</h2>
-            <p className="font-sans text-accent/60 mb-8">
-              Behind the scenes, new launches, and candle inspiration daily.
-            </p>
-            <a
-              href={`https://instagram.com/${instagramUsername}`}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white font-sans font-medium px-8 py-3 rounded-candle hover:opacity-90 transition-opacity"
-            >
-              @{instagramUsername}
-            </a>
-          </motion.div>
-        </section>
-      )}
+            @{INSTAGRAM}
+          </a>
+        </motion.div>
+      </section>
     </>
   );
 }

@@ -1,6 +1,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
+import { useSearchParams } from 'react-router-dom';
+import { Search, X } from 'lucide-react';
 import { fetchProducts } from '../utils/api';
 import ProductCard from '../components/ProductCard';
 import FilterSidebar from '../components/FilterSidebar';
@@ -15,32 +17,65 @@ const SORT_OPTIONS = [
 const DEFAULT_FILTERS = { category: '', minPrice: '', maxPrice: '', inStock: '' };
 
 export default function Shop() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Restore state from URL
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState(DEFAULT_FILTERS);
-  const [sort, setSort] = useState('newest');
-  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState(searchParams.get('q') || '');
+  const [searchInput, setSearchInput] = useState(searchParams.get('q') || '');
+  const [filters, setFilters] = useState({
+    category: searchParams.get('category') || '',
+    minPrice: searchParams.get('minPrice') || '',
+    maxPrice: searchParams.get('maxPrice') || '',
+    inStock: searchParams.get('inStock') || '',
+  });
+  const [sort, setSort] = useState(searchParams.get('sort') || 'newest');
+  const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
   const [showFilters, setShowFilters] = useState(false);
+
+  // Sync state → URL
+  useEffect(() => {
+    const params = {};
+    if (search) params.q = search;
+    if (filters.category) params.category = filters.category;
+    if (filters.minPrice) params.minPrice = filters.minPrice;
+    if (filters.maxPrice) params.maxPrice = filters.maxPrice;
+    if (filters.inStock) params.inStock = filters.inStock;
+    if (sort !== 'newest') params.sort = sort;
+    if (page > 1) params.page = page;
+    setSearchParams(params, { replace: true });
+  }, [search, filters, sort, page]);
 
   const load = useCallback(() => {
     setLoading(true);
-    fetchProducts({ ...filters, sort, page, limit: 9 })
+    fetchProducts({ ...filters, search, sort, page, limit: 9 })
       .then((r) => {
         setProducts(r.data.products);
         setTotal(r.data.total);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [filters, sort, page]);
+  }, [filters, search, sort, page]);
 
   useEffect(() => {
     setPage(1);
-  }, [filters, sort]);
+  }, [filters, search, sort]);
 
   useEffect(() => {
     load();
   }, [load]);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setSearch(searchInput);
+  };
+
+  const clearSearch = () => {
+    setSearchInput('');
+    setSearch('');
+  };
 
   const pages = Math.ceil(total / 9);
 
@@ -54,11 +89,30 @@ export default function Shop() {
       <div className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4">
           {/* Header */}
-          <div className="mb-8">
+          <div className="mb-6">
             <p className="section-subheading">Explore</p>
             <h1 className="section-heading">All Candles</h1>
             <p className="font-sans text-secondary text-sm">{total} products</p>
           </div>
+
+          {/* Search bar */}
+          <form onSubmit={handleSearchSubmit} className="mb-6">
+            <div className="relative max-w-md">
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary/50" />
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                placeholder="Search by name or scent..."
+                className="w-full pl-9 pr-10 py-2.5 border border-accent rounded-lg font-sans text-sm focus:outline-none focus:border-primary transition-colors"
+              />
+              {searchInput && (
+                <button type="button" onClick={clearSearch} className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary/50 hover:text-secondary">
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+          </form>
 
           {/* Mobile filter toggle */}
           <div className="flex items-center justify-between mb-4 md:hidden">
@@ -86,8 +140,8 @@ export default function Shop() {
             <div className="mb-4 md:hidden">
               <FilterSidebar
                 filters={filters}
-                onChange={setFilters}
-                onReset={() => setFilters(DEFAULT_FILTERS)}
+                onChange={(f) => { setFilters(f); setPage(1); }}
+                onReset={() => { setFilters(DEFAULT_FILTERS); setPage(1); }}
               />
             </div>
           )}
@@ -97,8 +151,8 @@ export default function Shop() {
             <aside className="hidden md:block w-60 flex-shrink-0">
               <FilterSidebar
                 filters={filters}
-                onChange={setFilters}
-                onReset={() => setFilters(DEFAULT_FILTERS)}
+                onChange={(f) => { setFilters(f); setPage(1); }}
+                onReset={() => { setFilters(DEFAULT_FILTERS); setPage(1); }}
               />
             </aside>
 
@@ -124,7 +178,7 @@ export default function Shop() {
               ) : products.length === 0 ? (
                 <div className="text-center py-20">
                   <p className="font-serif text-2xl text-secondary mb-2">No candles found</p>
-                  <p className="font-sans text-sm text-secondary/60">Try adjusting your filters</p>
+                  <p className="font-sans text-sm text-secondary/60">Try adjusting your filters or search</p>
                 </div>
               ) : (
                 <motion.div

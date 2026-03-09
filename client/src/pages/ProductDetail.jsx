@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
@@ -21,6 +21,9 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
+  const [zoomOpen, setZoomOpen] = useState(false);
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
+  const imgRef = useRef(null);
 
   useEffect(() => {
     setLoading(true);
@@ -71,18 +74,54 @@ export default function ProductDetail() {
             {/* Gallery */}
             <div>
               <motion.div
-                className="aspect-square rounded-candle overflow-hidden shadow-warm mb-4"
+                className="aspect-square rounded-candle overflow-hidden shadow-warm mb-4 relative cursor-zoom-in group"
                 key={activeImage}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
+                onClick={() => setZoomOpen(true)}
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  setZoomPos({
+                    x: ((e.clientX - rect.left) / rect.width) * 100,
+                    y: ((e.clientY - rect.top) / rect.height) * 100,
+                  });
+                }}
               >
                 <img
+                  ref={imgRef}
                   src={product.images[activeImage]}
                   alt={product.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
+                <div className="absolute inset-0 flex items-end justify-end p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="bg-text-dark/60 text-white text-xs font-sans px-2 py-1 rounded-full backdrop-blur-sm">Click to zoom</span>
+                </div>
               </motion.div>
+
+              {/* Zoom lightbox */}
+              {zoomOpen && (
+                <div
+                  className="fixed inset-0 z-50 bg-text-dark/90 flex items-center justify-center p-4 cursor-zoom-out"
+                  onClick={() => setZoomOpen(false)}
+                >
+                  <button
+                    onClick={() => setZoomOpen(false)}
+                    className="absolute top-4 right-4 text-white/70 hover:text-white bg-white/10 rounded-full p-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                  <img
+                    src={product.images[activeImage]}
+                    alt={product.name}
+                    className="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
+              )}
+
               {product.images.length > 1 && (
                 <div className="flex gap-2">
                   {product.images.map((img, i) => (

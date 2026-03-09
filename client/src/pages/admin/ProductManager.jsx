@@ -7,6 +7,7 @@ import {
   updateProduct,
   deleteProduct,
   uploadImages,
+  incrementOrderCount,
 } from '../../utils/api';
 import AdminSidebar from '../../components/AdminSidebar';
 
@@ -191,6 +192,14 @@ export default function ProductManager() {
     } catch { toast.error('Failed to delete product'); }
   };
 
+  const handleMarkOrdered = async (id) => {
+    try {
+      await incrementOrderCount(id);
+      toast.success('Order count incremented');
+      load();
+    } catch { toast.error('Failed to update order count'); }
+  };
+
   const pages = Math.ceil(total / 10);
 
   return (
@@ -256,7 +265,7 @@ export default function ProductManager() {
             <table className="w-full text-sm font-sans">
               <thead className="bg-accent/30">
                 <tr>
-                  {['Product', 'Price', 'Stock', 'Category', 'Status', 'Actions'].map((h) => (
+                  {['Product', 'Price', 'Stock', 'Orders', 'Category', 'Status', 'Actions'].map((h) => (
                     <th key={h} className="text-left px-4 py-3 text-xs text-secondary uppercase tracking-wide">{h}</th>
                   ))}
                 </tr>
@@ -265,13 +274,13 @@ export default function ProductManager() {
                 {loading ? (
                   Array.from({ length: 5 }).map((_, i) => (
                     <tr key={i}>
-                      {Array.from({ length: 6 }).map((_, j) => (
+                      {Array.from({ length: 7 }).map((_, j) => (
                         <td key={j} className="px-4 py-3"><div className="skeleton h-4 rounded" /></td>
                       ))}
                     </tr>
                   ))
                 ) : products.length === 0 ? (
-                  <tr><td colSpan={6} className="text-center py-10 text-secondary">No products found</td></tr>
+                  <tr><td colSpan={7} className="text-center py-10 text-secondary">No products found</td></tr>
                 ) : (
                   products.map((p) => (
                     <tr key={p._id} className="hover:bg-background/50 transition-colors">
@@ -294,6 +303,7 @@ export default function ProductManager() {
                           {p.stockQuantity === 0 ? 'Out' : p.stockQuantity}
                         </span>
                       </td>
+                      <td className="px-4 py-3 text-secondary">{p.orderCount ?? 0}</td>
                       <td className="px-4 py-3 capitalize text-secondary">{p.scentCategory}</td>
                       <td className="px-4 py-3">
                         <span className={`text-xs px-2 py-0.5 rounded-full ${p.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
@@ -301,8 +311,9 @@ export default function ProductManager() {
                         </span>
                       </td>
                       <td className="px-4 py-3">
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 flex-wrap">
                           <button onClick={() => setEditing(p)} className="text-xs text-primary hover:underline">Edit</button>
+                          <button onClick={() => handleMarkOrdered(p._id)} className="text-xs text-green-600 hover:underline" title={`Orders: ${p.orderCount ?? 0}`}>+Order</button>
                           <button onClick={() => setDeleteConfirm(p)} className="text-xs text-red-500 hover:underline">Delete</button>
                         </div>
                       </td>

@@ -22,6 +22,8 @@ export const updateProduct = (id, data) => api.put(`/products/admin/${id}`, data
 export const deleteProduct = (id) => api.delete(`/products/admin/${id}`);
 export const updateStock = (id, qty) =>
   api.patch(`/products/admin/${id}/stock`, { stockQuantity: qty });
+export const incrementOrderCount = (id) =>
+  api.patch(`/products/admin/${id}/order`);
 export const uploadImages = (formData) =>
   api.post('/products/admin/upload', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },

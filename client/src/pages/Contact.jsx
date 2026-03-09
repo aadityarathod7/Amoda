@@ -3,10 +3,11 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { toast } from 'react-toastify';
 import { submitContact } from '../utils/api';
-import { useSettings } from '../context/SettingsContext';
+
+const WHATSAPP = '919009303952';
+const INSTAGRAM = 'amoda_candle';
 
 export default function Contact() {
-  const { whatsappNumber, instagramUsername } = useSettings();
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [loading, setLoading] = useState(false);
 
@@ -90,9 +91,8 @@ export default function Contact() {
               <div className="bg-white rounded-candle shadow-card p-6">
                 <h3 className="font-serif text-xl text-text-dark mb-4">Quick Contact</h3>
 
-                {whatsappNumber && (
-                  <a
-                    href={`https://wa.me/${whatsappNumber}`}
+                <a
+                    href={`https://wa.me/${WHATSAPP}`}
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center gap-4 p-4 bg-green-50 rounded-xl mb-3 hover:bg-green-100 transition-colors"
@@ -107,11 +107,9 @@ export default function Contact() {
                       <p className="font-sans text-xs text-green-600">Chat with us directly</p>
                     </div>
                   </a>
-                )}
 
-                {instagramUsername && (
-                  <a
-                    href={`https://instagram.com/${instagramUsername}`}
+                <a
+                    href={`https://instagram.com/${INSTAGRAM}`}
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center gap-4 p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-colors"
@@ -123,10 +121,9 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-sans font-medium text-purple-800">Instagram DM</p>
-                      <p className="font-sans text-xs text-purple-600">@{instagramUsername}</p>
+                      <p className="font-sans text-xs text-purple-600">@{INSTAGRAM}</p>
                     </div>
                   </a>
-                )}
               </div>
 
               <div className="bg-accent/40 rounded-candle p-5">

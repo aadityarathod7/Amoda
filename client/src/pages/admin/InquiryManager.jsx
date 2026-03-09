@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { fetchInquiries, updateInquiry, deleteInquiry } from '../../utils/api';
 import AdminSidebar from '../../components/AdminSidebar';
 
+const WHATSAPP = '919009303952';
+
 export default function InquiryManager() {
   const [inquiries, setInquiries] = useState([]);
   const [total, setTotal] = useState(0);
@@ -133,6 +135,14 @@ export default function InquiryManager() {
                           className="text-xs bg-primary text-white rounded-lg px-3 py-1.5 font-sans"
                         >
                           Reply via Email
+                        </a>
+                        <a
+                          href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hi ${inq.name}, thanks for reaching out to Amoda Candles! `)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xs bg-green-500 text-white rounded-lg px-3 py-1.5 font-sans"
+                        >
+                          Reply via WhatsApp
                         </a>
                         <button
                           onClick={() => setDeleteConfirm(inq)}

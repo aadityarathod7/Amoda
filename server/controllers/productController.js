@@ -3,9 +3,10 @@ import cloudinary from '../config/cloudinary.js';
 
 // GET /api/products
 export const getProducts = async (req, res) => {
-  const { category, minPrice, maxPrice, inStock, sort, page = 1, limit = 12 } = req.query;
+  const { category, minPrice, maxPrice, inStock, sort, page = 1, limit = 12, search } = req.query;
 
   const filter = { isActive: true };
+  if (search) filter.name = { $regex: search, $options: 'i' };
   if (category) filter.scentCategory = category;
   if (minPrice || maxPrice) {
     filter.price = {};
@@ -75,6 +76,17 @@ export const deleteProduct = async (req, res) => {
   );
   if (!product) return res.status(404).json({ message: 'Product not found' });
   res.json({ message: 'Product deleted' });
+};
+
+// PATCH /api/admin/products/:id/order — increment orderCount
+export const incrementOrderCount = async (req, res) => {
+  const product = await Product.findByIdAndUpdate(
+    req.params.id,
+    { $inc: { orderCount: 1 } },
+    { new: true }
+  );
+  if (!product) return res.status(404).json({ message: 'Product not found' });
+  res.json({ orderCount: product.orderCount });
 };
 
 // PATCH /api/admin/products/:id/stock
