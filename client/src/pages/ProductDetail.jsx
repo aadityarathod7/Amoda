@@ -56,7 +56,26 @@ export default function ProductDetail() {
         <title>{product.name} — Amoda Candles</title>
         <meta name="description" content={product.description} />
         <meta property="og:title" content={`${product.name} — Amoda`} />
+        <meta property="og:description" content={product.description} />
         <meta property="og:image" content={product.images[0]} />
+        <meta property="og:type" content="product" />
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: product.name,
+          description: product.description,
+          image: product.images,
+          brand: { '@type': 'Brand', name: 'Amoda Candles' },
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: 'INR',
+            price: product.price,
+            availability: product.stockQuantity > 0
+              ? 'https://schema.org/InStock'
+              : 'https://schema.org/OutOfStock',
+            seller: { '@type': 'Organization', name: 'Amoda Candles' },
+          },
+        })}</script>
       </Helmet>
 
       <div className="pt-24 pb-16 min-h-screen">

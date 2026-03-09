@@ -44,6 +44,7 @@ export const getDashboard = async (req, res) => {
     recentInquiries,
     mostViewed,
     mostOrdered,
+    lowStock,
   ] = await Promise.all([
     Product.countDocuments({ isActive: true }),
     ContactInquiry.countDocuments(),
@@ -52,7 +53,8 @@ export const getDashboard = async (req, res) => {
     ContactInquiry.find().sort({ createdAt: -1 }).limit(5),
     Product.find({ isActive: true }).sort({ views: -1 }).limit(5).select('name images views'),
     Product.find({ isActive: true }).sort({ orderCount: -1 }).limit(5).select('name images orderCount'),
+    Product.find({ isActive: true, stockQuantity: { $gt: 0, $lt: 5 } }).select('name stockQuantity'),
   ]);
 
-  res.json({ totalProducts, totalInquiries, inStockCount, outOfStockCount, recentInquiries, mostViewed, mostOrdered });
+  res.json({ totalProducts, totalInquiries, inStockCount, outOfStockCount, recentInquiries, mostViewed, mostOrdered, lowStock });
 };

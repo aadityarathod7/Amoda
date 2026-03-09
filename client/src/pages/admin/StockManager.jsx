@@ -16,6 +16,7 @@ export default function StockManager() {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState({});
   const [saving, setSaving] = useState({});
+  const [bulkSaving, setBulkSaving] = useState(false);
 
   const load = useCallback(() => {
     setLoading(true);
@@ -42,6 +43,25 @@ export default function StockManager() {
     }
   };
 
+  const handleSaveAll = async () => {
+    const changed = Object.entries(editing).filter(([id, val]) => {
+      const p = products.find((p) => p._id === id);
+      return p && String(val) !== String(p.stockQuantity);
+    });
+    if (!changed.length) return toast.info('No changes to save');
+    setBulkSaving(true);
+    try {
+      await Promise.all(changed.map(([id, val]) => updateStock(id, Number(val))));
+      toast.success(`Updated ${changed.length} product${changed.length > 1 ? 's' : ''}`);
+      setEditing({});
+      load();
+    } catch {
+      toast.error('Some updates failed');
+    } finally {
+      setBulkSaving(false);
+    }
+  };
+
   const lowStock = products.filter((p) => p.stockQuantity < 5 && p.isActive);
 
   return (
@@ -50,9 +70,20 @@ export default function StockManager() {
       <div className="flex min-h-screen">
         <AdminSidebar />
         <main className="flex-1 p-8 overflow-auto">
-          <div className="mb-6">
-            <h1 className="font-serif text-2xl text-text-dark">Stock Manager</h1>
-            <p className="font-sans text-sm text-secondary">Update inventory levels inline</p>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="font-serif text-2xl text-text-dark">Stock Manager</h1>
+              <p className="font-sans text-sm text-secondary">Update inventory levels inline</p>
+            </div>
+            {Object.keys(editing).length > 0 && (
+              <button
+                onClick={handleSaveAll}
+                disabled={bulkSaving}
+                className="btn-primary text-sm disabled:opacity-50"
+              >
+                {bulkSaving ? 'Saving...' : `Save All (${Object.keys(editing).length} changed)`}
+              </button>
+            )}
           </div>
 
           {/* Low stock alerts */}

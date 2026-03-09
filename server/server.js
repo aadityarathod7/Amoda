@@ -34,6 +34,24 @@ app.use('/api/settings', settingsRoutes);
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
+// Dynamic sitemap
+app.get('/sitemap.xml', async (req, res) => {
+  try {
+    const { default: Product } = await import('./models/Product.js');
+    const products = await Product.find({ isActive: true }).select('_id updatedAt').lean();
+    const BASE = process.env.CLIENT_URL || 'https://amodacandles.com';
+    const staticPages = ['', '/shop', '/about', '/contact', '/faq', '/shipping'];
+    const urls = [
+      ...staticPages.map((p) => `<url><loc>${BASE}${p}</loc><changefreq>weekly</changefreq></url>`),
+      ...products.map((p) => `<url><loc>${BASE}/products/${p._id}</loc><lastmod>${new Date(p.updatedAt).toISOString().split('T')[0]}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`),
+    ];
+    res.header('Content-Type', 'application/xml');
+    res.send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join('')}</urlset>`);
+  } catch {
+    res.status(500).send('Error generating sitemap');
+  }
+});
+
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);

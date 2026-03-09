@@ -4,7 +4,8 @@ import { Helmet } from 'react-helmet';
 import { fetchDashboard } from '../../utils/api';
 import AdminSidebar from '../../components/AdminSidebar';
 import { DashboardStatSkeleton } from '../../components/Skeletons';
-import { Flame, CheckCircle, AlertCircle, MessageSquare, Package, Eye, TrendingUp } from 'lucide-react';
+import { Flame, CheckCircle, AlertCircle, MessageSquare, Package, Eye, TrendingUp, TriangleAlert } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const StatCard = ({ label, value, icon: Icon, color }) => (
   <div className={`rounded-candle p-5 ${color} flex items-center gap-4`}>
@@ -51,6 +52,25 @@ export default function Dashboard() {
               </>
             )}
           </div>
+
+          {/* Low stock alert */}
+          {!loading && data?.lowStock?.length > 0 && (
+            <div className="bg-yellow-50 border border-yellow-200 rounded-candle p-4 mb-6 flex items-start gap-3">
+              <TriangleAlert size={18} className="text-yellow-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-sans text-sm font-medium text-yellow-800 mb-1">
+                  Low Stock Warning — {data.lowStock.length} product{data.lowStock.length > 1 ? 's' : ''} running low
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {data.lowStock.map((p) => (
+                    <Link key={p._id} to="/admin/stock" className="font-sans text-xs bg-yellow-100 text-yellow-800 hover:bg-yellow-200 px-3 py-1 rounded-full transition-colors">
+                      {p.name} ({p.stockQuantity} left)
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Quick links */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
@@ -117,6 +137,31 @@ export default function Dashboard() {
               )}
             </div>
           </div>
+
+          {/* Views bar chart */}
+          {!loading && data?.mostViewed?.some((p) => p.views > 0) && (
+            <div className="bg-white rounded-candle shadow-card p-5 mb-10">
+              <div className="flex items-center gap-2 mb-4">
+                <Eye size={18} className="text-blue-500" />
+                <h2 className="font-serif text-lg text-text-dark">Product Views — Top 5</h2>
+              </div>
+              <ResponsiveContainer width="100%" height={200}>
+                <BarChart data={data.mostViewed} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+                  <XAxis dataKey="name" tick={{ fontSize: 11, fontFamily: 'sans-serif' }} tickFormatter={(v) => v.length > 14 ? v.slice(0, 14) + '…' : v} />
+                  <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
+                  <Tooltip
+                    formatter={(v) => [`${v} views`, 'Views']}
+                    contentStyle={{ fontFamily: 'sans-serif', fontSize: 12, borderRadius: 8 }}
+                  />
+                  <Bar dataKey="views" radius={[4, 4, 0, 0]}>
+                    {data.mostViewed.map((_, i) => (
+                      <Cell key={i} fill={i === 0 ? '#d4a574' : '#e8c9a0'} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          )}
 
           {/* Recent inquiries */}
           {data?.recentInquiries?.length > 0 && (

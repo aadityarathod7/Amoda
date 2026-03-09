@@ -5,6 +5,7 @@ import { useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import PageLoader from './components/PageLoader';
+import WhatsAppFloat from './components/WhatsAppFloat';
 
 // Public pages
 const Home = lazy(() => import('./pages/Home'));
@@ -14,6 +15,7 @@ const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const Shipping = lazy(() => import('./pages/Shipping'));
 
 // Admin pages
 const AdminLogin = lazy(() => import('./pages/admin/Login'));
@@ -32,84 +34,28 @@ const AdminLayout = ({ children }) => (
   <div className="min-h-screen bg-gray-50">{children}</div>
 );
 
+const PublicLayout = ({ children }) => (
+  <>
+    <Navbar />
+    <main>{children}</main>
+    <Footer />
+    <WhatsAppFloat />
+  </>
+);
+
 export default function App() {
   return (
     <Suspense fallback={<PageLoader />}>
       <AnimatePresence mode="wait">
         <Routes>
-          {/* Public routes with Navbar + Footer */}
-          <Route
-            path="/"
-            element={
-              <>
-                <Navbar />
-                <main>
-                  <Home />
-                </main>
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/shop"
-            element={
-              <>
-                <Navbar />
-                <main>
-                  <Shop />
-                </main>
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/products/:id"
-            element={
-              <>
-                <Navbar />
-                <main>
-                  <ProductDetail />
-                </main>
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <>
-                <Navbar />
-                <main>
-                  <About />
-                </main>
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <>
-                <Navbar />
-                <main>
-                  <Contact />
-                </main>
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/faq"
-            element={
-              <>
-                <Navbar />
-                <main>
-                  <FAQ />
-                </main>
-                <Footer />
-              </>
-            }
-          />
+          {/* Public routes */}
+          <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
+          <Route path="/shop" element={<PublicLayout><Shop /></PublicLayout>} />
+          <Route path="/products/:id" element={<PublicLayout><ProductDetail /></PublicLayout>} />
+          <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
+          <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
+          <Route path="/faq" element={<PublicLayout><FAQ /></PublicLayout>} />
+          <Route path="/shipping" element={<PublicLayout><Shipping /></PublicLayout>} />
 
           {/* Admin routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
@@ -165,16 +111,7 @@ export default function App() {
           />
 
           {/* 404 */}
-          <Route
-            path="*"
-            element={
-              <>
-                <Navbar />
-                <NotFound />
-                <Footer />
-              </>
-            }
-          />
+          <Route path="*" element={<PublicLayout><NotFound /></PublicLayout>} />
         </Routes>
       </AnimatePresence>
     </Suspense>
