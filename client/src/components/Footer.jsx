@@ -13,108 +13,141 @@ const WhatsAppIcon = () => (
   </svg>
 );
 
+
 export default function Footer() {
   const { whatsappNumber, instagramUsername } = useSettings();
 
   return (
-    <footer className="bg-text-dark text-accent pt-14 pb-8">
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
-        {/* Brand */}
-        <div>
-          <h2 className="font-serif text-2xl text-white mb-3">Amoda</h2>
-          <p className="font-sans text-sm text-accent/70 leading-relaxed">
-            Handcrafted soy candles made with love. Each pour is a small act of care for your
-            space and senses.
-          </p>
-          <div className="flex gap-3 mt-5">
-            {instagramUsername && (
-              <a
-                href={`https://instagram.com/${instagramUsername}`}
-                target="_blank"
-                rel="noreferrer"
-                className="p-2 bg-white/10 rounded-full hover:bg-primary transition-colors"
-                aria-label="Instagram"
-              >
-                <InstagramIcon />
-              </a>
-            )}
-            {whatsappNumber && (
-              <a
-                href={`https://wa.me/${whatsappNumber}`}
-                target="_blank"
-                rel="noreferrer"
-                className="p-2 bg-white/10 rounded-full hover:bg-green-600 transition-colors"
-                aria-label="WhatsApp"
-              >
-                <WhatsAppIcon />
-              </a>
-            )}
-          </div>
-        </div>
+    <footer className="bg-[#1e1e1e] text-accent">
+      {/* Top decorative band */}
+      <div className="border-t-2 border-primary/40" />
 
-        {/* Navigation */}
-        <div>
-          <h3 className="font-sans text-xs tracking-widest uppercase text-accent/50 mb-4">
-            Navigate
-          </h3>
-          <ul className="space-y-2">
-            {[
-              { to: '/', label: 'Home' },
-              { to: '/shop', label: 'Shop' },
-              { to: '/about', label: 'About Us' },
-              { to: '/contact', label: 'Contact' },
-              { to: '/faq', label: 'FAQ' },
-            ].map(({ to, label }) => (
-              <li key={to}>
-                <Link
-                  to={to}
-                  className="font-sans text-sm text-accent/70 hover:text-primary transition-colors"
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div className="max-w-6xl mx-auto px-6 pt-14 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
 
-        {/* Contact */}
-        <div>
-          <h3 className="font-sans text-xs tracking-widest uppercase text-accent/50 mb-4">
-            Get in Touch
-          </h3>
-          <ul className="space-y-2 font-sans text-sm text-accent/70">
-            {whatsappNumber && (
-              <li>
-                <a
-                  href={`https://wa.me/${whatsappNumber}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-primary transition-colors"
-                >
-                  WhatsApp Us
-                </a>
-              </li>
-            )}
-            {instagramUsername && (
-              <li>
+          {/* Brand column — wider */}
+          <div className="md:col-span-2">
+            <div className="mb-4">
+              <img
+                src="/src/public/amodalogo.png"
+                alt="Amoda"
+                className="h-16 w-auto object-contain"
+              />
+            </div>
+            <p className="font-sans text-sm text-accent/60 leading-relaxed max-w-xs mb-6">
+              Handcrafted soy candles poured with intention. Each scent is a story — of warmth,
+              stillness, and the small luxuries that make a house feel like home.
+            </p>
+            <div className="flex gap-3">
+              {instagramUsername && (
                 <a
                   href={`https://instagram.com/${instagramUsername}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-primary transition-colors"
+                  aria-label="Instagram"
+                  className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-sans text-accent/70 hover:border-primary hover:text-primary transition-all"
                 >
-                  @{instagramUsername}
+                  <InstagramIcon />
+                  <span>@{instagramUsername}</span>
                 </a>
-              </li>
-            )}
-          </ul>
-        </div>
-      </div>
+              )}
+              {whatsappNumber && (
+                <a
+                  href={`https://wa.me/${whatsappNumber}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="WhatsApp"
+                  className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-sans text-accent/70 hover:border-green-500 hover:text-green-400 transition-all"
+                >
+                  <WhatsAppIcon />
+                  <span>Chat with us</span>
+                </a>
+              )}
+            </div>
+          </div>
 
-      <div className="border-t border-white/10 pt-6 text-center">
-        <p className="font-sans text-xs text-accent/40">
-          &copy; {new Date().getFullYear()} Amoda Candles. All rights reserved.
-        </p>
+          {/* Navigation */}
+          <div>
+            <h3 className="font-sans text-[10px] tracking-[0.2em] uppercase text-primary mb-5">
+              Explore
+            </h3>
+            <ul className="space-y-3">
+              {[
+                { to: '/', label: 'Home' },
+                { to: '/shop', label: 'Shop All' },
+                { to: '/about', label: 'Our Story' },
+                { to: '/contact', label: 'Contact' },
+                { to: '/faq', label: 'FAQ' },
+              ].map(({ to, label }) => (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    className="font-sans text-sm text-accent/60 hover:text-white transition-colors"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact / Info */}
+          <div>
+            <h3 className="font-sans text-[10px] tracking-[0.2em] uppercase text-primary mb-5">
+              Connect
+            </h3>
+            <ul className="space-y-3 font-sans text-sm text-accent/60">
+              {whatsappNumber && (
+                <li>
+                  <a
+                    href={`https://wa.me/${whatsappNumber}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    WhatsApp
+                  </a>
+                </li>
+              )}
+              {instagramUsername && (
+                <li>
+                  <a
+                    href={`https://instagram.com/${instagramUsername}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    Instagram
+                  </a>
+                </li>
+              )}
+              <li>
+                <Link to="/contact" className="hover:text-white transition-colors">
+                  Send a Message
+                </Link>
+              </li>
+            </ul>
+
+            <div className="mt-8">
+              <h3 className="font-sans text-[10px] tracking-[0.2em] uppercase text-primary mb-3">
+                Shipping
+              </h3>
+              <p className="font-sans text-xs text-accent/50 leading-relaxed">
+                Orders dispatched within 2–3 business days. Pan-India delivery available.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
+          <p className="font-sans text-xs text-accent/30">
+            &copy; {new Date().getFullYear()} Amoda Candles. All rights reserved.
+          </p>
+          <p className="font-sans text-xs text-accent/30">
+            Crafted with care &mdash; small batch, always.
+          </p>
+        </div>
       </div>
     </footer>
   );

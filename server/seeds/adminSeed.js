@@ -18,8 +18,8 @@ const sampleProducts = [
     weight: '200g',
     stockQuantity: 25,
     images: [
-      'https://images.unsplash.com/photo-1602928298849-325cec8771cd?w=800&q=80',
-      'https://images.unsplash.com/photo-1605651377861-348620e4d0fc?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_yqpk4pyqpk4pyqpk.png',
+      '/src/public/candles/Gemini_Generated_Image_c0jdvoc0jdvoc0jd.png',
     ],
     isFeatured: true,
     isActive: true,
@@ -35,8 +35,8 @@ const sampleProducts = [
     weight: '250g',
     stockQuantity: 18,
     images: [
-      'https://images.unsplash.com/photo-1603905042124-33d06c2e0c10?w=800&q=80',
-      'https://images.unsplash.com/photo-1508673319203-1fc4e4e3d7a0?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_yz866wyz866wyz86.png',
+      '/src/public/candles/Gemini_Generated_Image_38bu1538bu1538bu.png',
     ],
     isFeatured: true,
     isActive: true,
@@ -52,8 +52,8 @@ const sampleProducts = [
     weight: '180g',
     stockQuantity: 30,
     images: [
-      'https://images.unsplash.com/photo-1574169208507-84376144848b?w=800&q=80',
-      'https://images.unsplash.com/photo-1512474932049-78879b0c4da3?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_yqpk4pyqpk4pyqpk.png',
+      '/src/public/candles/Gemini_Generated_Image_yz866wyz866wyz86.png',
     ],
     isFeatured: true,
     isActive: true,
@@ -69,8 +69,8 @@ const sampleProducts = [
     weight: '220g',
     stockQuantity: 12,
     images: [
-      'https://images.unsplash.com/photo-1571781565036-d3f759be73e4?w=800&q=80',
-      'https://images.unsplash.com/photo-1545579133-99bb5ab189bd?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_c0jdvoc0jdvoc0jd.png',
+      '/src/public/candles/Gemini_Generated_Image_38bu1538bu1538bu.png',
     ],
     isFeatured: false,
     isActive: true,
@@ -86,8 +86,8 @@ const sampleProducts = [
     weight: '200g',
     stockQuantity: 20,
     images: [
-      'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80',
-      'https://images.unsplash.com/photo-1609080944-0d4b7f5dc6a5?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_yqpk4pyqpk4pyqpk.png',
+      '/src/public/candles/Gemini_Generated_Image_c0jdvoc0jdvoc0jd.png',
     ],
     isFeatured: true,
     isActive: true,
@@ -103,8 +103,8 @@ const sampleProducts = [
     weight: '240g',
     stockQuantity: 0,
     images: [
-      'https://images.unsplash.com/photo-1611072337226-1b8a4638f252?w=800&q=80',
-      'https://images.unsplash.com/photo-1602928298849-325cec8771cd?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_yz866wyz866wyz86.png',
+      '/src/public/candles/Gemini_Generated_Image_38bu1538bu1538bu.png',
     ],
     isFeatured: true,
     isActive: true,
@@ -120,8 +120,8 @@ const sampleProducts = [
     weight: '280g',
     stockQuantity: 8,
     images: [
-      'https://images.unsplash.com/photo-1608181831718-c9e1e9a78bbc?w=800&q=80',
-      'https://images.unsplash.com/photo-1603905042124-33d06c2e0c10?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_c0jdvoc0jdvoc0jd.png',
+      '/src/public/candles/Gemini_Generated_Image_yqpk4pyqpk4pyqpk.png',
     ],
     isFeatured: true,
     isActive: true,
@@ -137,8 +137,8 @@ const sampleProducts = [
     weight: '190g',
     stockQuantity: 22,
     images: [
-      'https://images.unsplash.com/photo-1544308338-41b77d50de43?w=800&q=80',
-      'https://images.unsplash.com/photo-1574169208507-84376144848b?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_38bu1538bu1538bu.png',
+      '/src/public/candles/Gemini_Generated_Image_yz866wyz866wyz86.png',
     ],
     isFeatured: false,
     isActive: true,
@@ -154,8 +154,8 @@ const sampleProducts = [
     weight: '185g',
     stockQuantity: 15,
     images: [
-      'https://images.unsplash.com/photo-1512474932049-78879b0c4da3?w=800&q=80',
-      'https://images.unsplash.com/photo-1605651377861-348620e4d0fc?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_yqpk4pyqpk4pyqpk.png',
+      '/src/public/candles/Gemini_Generated_Image_38bu1538bu1538bu.png',
     ],
     isFeatured: false,
     isActive: true,
@@ -171,8 +171,8 @@ const sampleProducts = [
     weight: '210g',
     stockQuantity: 4,
     images: [
-      'https://images.unsplash.com/photo-1608181831718-c9e1e9a78bbc?w=800&q=80',
-      'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_c0jdvoc0jdvoc0jd.png',
+      '/src/public/candles/Gemini_Generated_Image_yz866wyz866wyz86.png',
     ],
     isFeatured: false,
     isActive: true,
@@ -188,8 +188,8 @@ const sampleProducts = [
     weight: '250g',
     stockQuantity: 10,
     images: [
-      'https://images.unsplash.com/photo-1545579133-99bb5ab189bd?w=800&q=80',
-      'https://images.unsplash.com/photo-1611072337226-1b8a4638f252?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_38bu1538bu1538bu.png',
+      '/src/public/candles/Gemini_Generated_Image_yqpk4pyqpk4pyqpk.png',
     ],
     isFeatured: true,
     isActive: true,
@@ -205,8 +205,8 @@ const sampleProducts = [
     weight: '230g',
     stockQuantity: 0,
     images: [
-      'https://images.unsplash.com/photo-1508673319203-1fc4e4e3d7a0?w=800&q=80',
-      'https://images.unsplash.com/photo-1544308338-41b77d50de43?w=800&q=80',
+      '/src/public/candles/Gemini_Generated_Image_yz866wyz866wyz86.png',
+      '/src/public/candles/Gemini_Generated_Image_c0jdvoc0jdvoc0jd.png',
     ],
     isFeatured: false,
     isActive: true,
@@ -234,8 +234,8 @@ const seed = async () => {
     const existingSettings = await SiteSettings.findOne();
     if (!existingSettings) {
       await SiteSettings.create({
-        whatsappNumber: process.env.WHATSAPP_NUMBER || '91XXXXXXXXXX',
-        instagramUsername: process.env.INSTAGRAM_USERNAME || 'amoda.candles',
+        whatsappNumber: process.env.WHATSAPP_NUMBER || '919009303952',
+        instagramUsername: process.env.INSTAGRAM_USERNAME || 'amoda_candle',
         heroTagline: 'Handcrafted with love, scented with soul',
         maintenanceMode: false,
       });

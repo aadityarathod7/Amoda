@@ -50,8 +50,8 @@ export default function About() {
             custom={1}
           >
             <img
-              src="https://images.unsplash.com/photo-1571781565036-d3f759be73e4?w=800&q=80"
-              alt="Candle making"
+              src="/src/public/candles/Gemini_Generated_Image_yqpk4pyqpk4pyqpk.png"
+              alt="Aesthetic candle"
               loading="lazy"
               className="w-full h-full object-cover"
             />
@@ -93,9 +93,9 @@ export default function About() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { img: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80', label: 'Measuring fragrance oils' },
-              { img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80', label: 'Hand-pouring in batches' },
-              { img: 'https://images.unsplash.com/photo-1611072337226-1b8a4638f252?w=600&q=80', label: 'Quality checking each candle' },
+              { img: '/src/public/candles/Gemini_Generated_Image_c0jdvoc0jdvoc0jd.png', label: 'Measuring fragrance oils' },
+              { img: '/src/public/candles/Gemini_Generated_Image_yz866wyz866wyz86.png', label: 'Hand-pouring in batches' },
+              { img: '/src/public/candles/Gemini_Generated_Image_38bu1538bu1538bu.png', label: 'Quality checking each candle' },
             ].map((item, i) => (
               <motion.div
                 key={i}
